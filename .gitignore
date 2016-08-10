@@ -1,5 +1,5 @@
 *.py[co]
 .DS_Store
 .idea/
-baidu_index/data
+#baidu_index/data
 baidu_index/config.py

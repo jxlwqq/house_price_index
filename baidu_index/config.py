@@ -6,9 +6,9 @@ import sys
 # 具体参考selenium的浏览器环境配置
 browser_driver = 'Firefox'  # 可以替换为PhantomJS
 # 百度用户名
-user_name = '你的账号'
+user_name = 'jxlwqq'
 # 百度密码
-password = '你的密码'
+password = 'Jxl980327/'
 # 百度登陆链接
 login_url = ('https://passport.baidu.com/v2/?login&tpl=mn&u='
              'http%3A%2F%2Fwww.baidu.com%2F')
