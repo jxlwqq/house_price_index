@@ -9,13 +9,16 @@ import xlwt
 from browser import BaiduBrowser
 from utils.log import logger
 import config
+import model
 
 
-def main():
+def main(area_name, month):
+    sql = "select a.id, c.area_code from house.area as a left JOIN house.area_code as c on (a.id = c.area_id) WHERE a.area_name = '%s' and c.code_type = 'baidu'" % area_name
+    data = model.query(sql)
+    area_id = data[0][0]
+    area_code = data[0][1]
     logger.info(u'请确保你填写的账号密码能够成功登陆百度')
-    # s = BaiduBrowser(cookie_json='{"name": "1"}')
-    # cookie_json = s.cookie_json
-    # s.close()
+
     s = BaiduBrowser()
 
     fp = open(config.keywords_task_file_path, 'rb')
@@ -36,7 +39,7 @@ def main():
             keyword_unicode = keyword.decode('utf-8')
             for type_name in type_list:
                 baidu_index_dict = s.get_baidu_index(
-                    keyword_unicode, type_name
+                    keyword_unicode, area_code, month, type_name
                 )
                 date_list = sorted(baidu_index_dict.keys())
 
@@ -46,10 +49,25 @@ def main():
                 data_list = []
                 for date in date_list:
                     value = baidu_index_dict[date]
-                    data_list.append((keyword_unicode, date, type_name, value))
-                write_excel(file_path, data_list)
+                    data_list.append((keyword, date, type_name, value))
+                #write_excel(file_path, data_list)
+                insert_data(area_id, data_list)
         except:
             print traceback.format_exc()
+
+def insert_data(area_id, data_list):
+    values = ''
+    for item in data_list:
+        time_type = 'day'
+        time_index = str(item[1]).replace('-', '')
+        data_key = '百度指数-%s' % item[0]
+        data_value = item[3]
+        values += "('%s', %s, %s, '%s', %s, now())," % (time_type, time_index, area_id, data_key, data_value)
+    if values:
+        sql = "insert into house.house_index(time_type, time_index, area_id, data_key, data_value, create_time) VALUES " + values.rstrip(',') + ' on duplicate key update data_value = values(data_value)'
+        model.execute(sql)
+
+
 
 
 def write_excel(excel_file, data_list):

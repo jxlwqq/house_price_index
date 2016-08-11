@@ -13,6 +13,8 @@ from api import Api
 from utils.log import logger
 from multi_thread import WorkManager
 
+import calendar
+
 
 class BaiduBrowser(object):
     def __init__(self, cookie_json='', check_login=True):
@@ -96,10 +98,11 @@ class BaiduBrowser(object):
         logger.info('date:%s, value:%s' % (date, value))
         return value.replace(',', '')
 
-    def get_baidu_index_by_date_range(self, keyword, start_date, end_date,
+    def get_baidu_index_by_date_range(self, keyword, start_date, end_date, area_id,
                                       type_name):
         # 根据区间获取关键词的索引值
         url = config.time_range_trend_url.format(
+            area_id=area_id,
             start_date=start_date, end_date=end_date,
             word=urllib.quote(keyword.encode('gbk'))
         )
@@ -170,10 +173,17 @@ class BaiduBrowser(object):
         logger.info('all_start_date:%s, all_end_date:%s' % (start_date, end_date))
         return date_list
 
-    def get_baidu_index(self, keyword, type_name):
-        if config.start_date and config.end_date:
+    def get_baidu_index(self, keyword, area_id, month, type_name):
+        if month:
+            start_date = month + '-01'
+            end_date = month
+            month = month.split('-')
+            month[0] = int(month[0])
+            month[1] = int(month[1])
+            month_range = calendar.monthrange(month[0], month[1])
+            end_date = (end_date + '-%s') % month_range[1]
             _, _, date_list = self.get_date_info(
-                start_date=config.start_date, end_date=config.end_date
+                start_date=start_date, end_date=end_date
             )
         else:
             # 配置文件不配置start_date和end_date，可以查询到这个关键词数据的最大区间
@@ -191,7 +201,7 @@ class BaiduBrowser(object):
                 else:
                     end_date = date_list[start + skip]
                 result = self.get_baidu_index_by_date_range(
-                    keyword, start_date, end_date, type_name
+                    keyword, start_date, end_date, area_id, type_name
                 )
                 baidu_index_dict.update(result)
                 start += skip + 1

@@ -16,8 +16,8 @@ login_url = ('https://passport.baidu.com/v2/?login&tpl=mn&u='
 one_week_trend_url = ('http://index.baidu.com/?tpl=trend&type=0'
                       '&area=0&time=12&word={word}')
 # 区间
-time_range_trend_url = ('http://index.baidu.com/?tpl=trend&type=0&area=0'
-                        '&time={start_date}|{end_date}&word={word}')
+time_range_trend_url = ('http://index.baidu.com/?tpl=trend&type=0'
+                        '&area={area_id}&time={start_date}|{end_date}&word={word}')
 # api
 all_index_url = ('http://index.baidu.com/Interface/Search/getAllIndex/'
                  '?res={res}&res2={res2}&startdate={start_date}'
