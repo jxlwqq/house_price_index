@@ -1,10 +1,11 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <script src="{{  url_for('static', filename='echarts.min.js') }}"></script>
     <script src="{{  url_for('static', filename='jquery-3.1.0.min.js') }}"></script>
-    <title>Title</title>
+    <title>{{title}}</title>
 </head>
 <body>
 <div id="main" style="width:100%;height:400px;"></div>
@@ -15,35 +16,85 @@
     var myChart = echarts.init(document.getElementById('main'));
 
     // 指定图表的配置项和数据
-    var option = {
+
+    option = {
+        tooltip: {
+            trigger: 'axis',
+            position: function (pt) {
+                return [pt[0], '10%'];
+            }
+        },
+        title: {
+            left: 'center',
+            text: '{{title}}',
+        },
+        legend: {
+            top: 'bottom',
+            data: ['意向']
+        },
+        toolbox: {
+            feature: {
+                dataZoom: {
+                    yAxisIndex: 'none'
+                },
+                restore: {},
+                saveAsImage: {}
+            }
+        },
         xAxis: {
-            type: 'value'
+            type: 'category',
+            boundaryGap: false,
+            data: {{date}}
         },
         yAxis: {
-            type: 'value'
+            type: 'value',
+            boundaryGap: [0, '100%']
         },
-        dataZoom: [
-            {   // 这个dataZoom组件，默认控制x轴。
-                type: 'slider', // 这个 dataZoom 组件是 slider 型 dataZoom 组件
-                start: 10,      // 左边在 10% 的位置。
-                end: 60         // 右边在 60% 的位置。
+        dataZoom: [{
+            type: 'inside',
+            start: 0,
+            end: 10
+        }, {
+            start: 0,
+            end: 10,
+            handleIcon: 'M10.7,11.9v-1.3H9.3v1.3c-4.9,0.3-8.8,4.4-8.8,9.4c0,5,3.9,9.1,8.8,9.4v1.3h1.3v-1.3c4.9-0.3,8.8-4.4,8.8-9.4C19.5,16.3,15.6,12.2,10.7,11.9z M13.3,24.4H6.7V23h6.6V24.4z M13.3,19.6H6.7v-1.4h6.6V19.6z',
+            handleSize: '80%',
+            handleStyle: {
+                color: '#fff',
+                shadowBlur: 3,
+                shadowColor: 'rgba(0, 0, 0, 0.6)',
+                shadowOffsetX: 2,
+                shadowOffsetY: 2
             }
-        ],
+        }],
         series: [
             {
-                type: 'scatter', // 这是个『散点图』
+                name: '模拟数据',
+                type: 'line',
+                smooth: true,
+                symbol: 'none',
+                sampling: 'average',
                 itemStyle: {
                     normal: {
-                        opacity: 0.8
+                        color: 'rgb(255, 70, 131)'
                     }
                 },
-                symbolSize: function (val) {
-                    return val[2] * 40;
+                areaStyle: {
+                    normal: {
+                        color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+                            offset: 0,
+                            color: 'rgb(255, 158, 68)'
+                        }, {
+                            offset: 1,
+                            color: 'rgb(255, 70, 131)'
+                        }])
+                    }
                 },
-                data: [["14.616", "7.241", "0.896"], ["3.958", "5.701", "0.955"], ["2.768", "8.971", "0.669"], ["9.051", "9.710", "0.171"], ["14.046", "4.182", "0.536"], ["12.295", "1.429", "0.962"], ["4.417", "8.167", "0.113"], ["0.492", "4.771", "0.785"], ["7.632", "2.605", "0.645"], ["14.242", "5.042", "0.368"]]
+                data: {{data}}
             }
         ]
-    }
+    };
+
 
     // 使用刚指定的配置项和数据显示图表。
     myChart.setOption(option);
