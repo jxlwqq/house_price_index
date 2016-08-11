@@ -12,7 +12,7 @@ import config
 import model
 
 
-def main(area_name, month):
+def main(area_name, month=''):
     sql = "select a.id, c.area_code from house.area as a left JOIN house.area_code as c on (a.id = c.area_id) WHERE a.area_name = '%s' and c.code_type = 'baidu'" % area_name
     data = model.query(sql)
     area_id = data[0][0]

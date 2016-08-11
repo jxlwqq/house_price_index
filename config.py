@@ -33,10 +33,6 @@ user_center_url = 'http://i.baidu.com/'
 login_sign = 'http://passport.baidu.com/?logout'
 # 线程数
 num_of_threads = 40
-# 关键词index的区间开始
-start_date = '2016-07-01'
-# 关键词index的区间结束
-end_date = '2016-07-31'
 
 # 输出的格式，暂时只支持excel
 # extension = 'excel'
@@ -48,7 +44,6 @@ keywords_task_file_path = sys.path[0] + '/baidu_index/task.txt'
 # 要获取趋势的类别，默认是三种趋势都获取。all代表整体趋势，pc代表PC趋势, wise代表移动趋势
 # index_type_list = ['all', 'pc', 'wise']
 index_type_list = ['all']
-
 
 
 # mysql
