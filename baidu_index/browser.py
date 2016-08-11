@@ -9,9 +9,9 @@ from datetime import datetime, timedelta
 from selenium import webdriver
 
 import config
-from .api import Api
-from .utils.log import logger
-from .multi_thread import WorkManager
+from api import Api
+from utils.log import logger
+from multi_thread import WorkManager
 
 
 class BaiduBrowser(object):

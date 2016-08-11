@@ -6,9 +6,9 @@ import traceback
 
 import xlwt
 
-from baidu_index.browser import BaiduBrowser
-from baidu_index.utils.log import logger
-import baidu_index.config as config
+from browser import BaiduBrowser
+from utils.log import logger
+import config
 
 
 def main():
