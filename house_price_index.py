@@ -9,6 +9,7 @@ import re
 import config
 import model
 
+
 def get_last_month():
     today = datetime.date.today()
     month = (str)(datetime.date(day=1, month=today.month, year=today.year) - datetime.timedelta(days=1))
@@ -28,7 +29,6 @@ def time_format(time, type):
 
 
 def main(area_name, month):
-
     time_index = time_format(month, '')
     date_list = [time_format(month, '.')]
 
@@ -66,5 +66,3 @@ def main(area_name, month):
 
     sql = sql + values.rstrip(',') + " on duplicate key update data_value = values(data_value)"
     model.execute(sql)
-
-
