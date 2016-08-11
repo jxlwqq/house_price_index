@@ -15,8 +15,8 @@ import model
 def main(area_name, month=''):
     sql = "select a.id, c.area_code from house.area as a left JOIN house.area_code as c on (a.id = c.area_id) WHERE a.area_name = '%s' and c.code_type = 'baidu'" % area_name
     data = model.query(sql)
-    area_id = data[0][0]
-    area_code = data[0][1]
+    area_id = int(data[0][0])
+    area_code = int(data[0][1])
     logger.info(u'请确保你填写的账号密码能够成功登陆百度')
 
     s = BaiduBrowser()
@@ -42,15 +42,10 @@ def main(area_name, month=''):
                     keyword_unicode, area_code, month, type_name
                 )
                 date_list = sorted(baidu_index_dict.keys())
-
-                file_name = '%s_%s.xls' % (keyword, type_name)
-                file_path = os.path.join(result_folder, file_name)
-
                 data_list = []
                 for date in date_list:
                     value = baidu_index_dict[date]
                     data_list.append((keyword, date, type_name, value))
-                #write_excel(file_path, data_list)
                 insert_data(area_id, data_list)
         except:
             print traceback.format_exc()
@@ -67,26 +62,6 @@ def insert_data(area_id, data_list):
         sql = "insert into house.house_index(time_type, time_index, area_id, data_key, data_value, create_time) VALUES " + values.rstrip(',') + ' on duplicate key update data_value = values(data_value)'
         model.execute(sql)
 
-
-
-
-def write_excel(excel_file, data_list):
-    wb = xlwt.Workbook()
-    ws = wb.add_sheet(u'工作表1')
-    row = 0
-    ws.write(row, 0, u'关键词')
-    ws.write(row, 1, u'日期')
-    ws.write(row, 2, u'类型')
-    ws.write(row, 3, u'指数')
-    row = 1
-    for result in data_list:
-        col = 0
-        for item in result:
-            ws.write(row, col, item)
-            col += 1
-        row += 1
-
-    wb.save(excel_file)
 
 if __name__ == '__main__':
     main()

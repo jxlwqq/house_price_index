@@ -7,12 +7,10 @@ import json
 from datetime import datetime, timedelta
 
 from selenium import webdriver
-
-import config
 from api import Api
 from utils.log import logger
 from multi_thread import WorkManager
-
+import config
 import calendar
 
 
@@ -145,9 +143,10 @@ class BaiduBrowser(object):
 
         return baidu_index_dict
 
-    def _get_index_period(self, keyword):
+    def _get_index_period(self, keyword, area_id):
         # 拼接一周趋势的url
         url = config.one_week_trend_url.format(
+            area_id=area_id,
             word=urllib.quote(keyword.encode('gbk'))
         )
         self.browser.get(url)
@@ -187,7 +186,7 @@ class BaiduBrowser(object):
             )
         else:
             # 配置文件不配置start_date和end_date，可以查询到这个关键词数据的最大区间
-            date_list = self._get_index_period(keyword)
+            date_list = self._get_index_period(keyword, area_id)
 
         baidu_index_dict = dict()
         start = 0

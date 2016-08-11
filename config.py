@@ -14,7 +14,7 @@ login_url = ('https://passport.baidu.com/v2/?login&tpl=mn&u='
              'http%3A%2F%2Fwww.baidu.com%2F')
 # 一周
 one_week_trend_url = ('http://index.baidu.com/?tpl=trend&type=0'
-                      '&area=0&time=12&word={word}')
+                      '&area={area_id}&time=12&word={word}')
 # 区间
 time_range_trend_url = ('http://index.baidu.com/?tpl=trend&type=0'
                         '&area={area_id}&time={start_date}|{end_date}&word={word}')
@@ -45,7 +45,6 @@ keywords_task_file_path = sys.path[0] + '/baidu_index/task.txt'
 # index_type_list = ['all', 'pc', 'wise']
 index_type_list = ['all']
 
-
 # mysql
 
 mysql = {'host': 'localhost', 'user': 'root', 'password': '123456', 'database': 'house'}
@@ -63,5 +62,3 @@ sina = {
         'response_pattern': 'SINAREMOTECALLCALLBACK\d+\(\(\{config:\{all:(.*?),index:\d+,defaultItems:\[.*?\]\},count:"\d+",data:(.*?)}\)\)'
     }
 }
-
-
