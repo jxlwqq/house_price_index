@@ -58,7 +58,8 @@ sina = {
     'mac_data_url': 'http://finance.sina.com.cn/mac/',
     # 大中城市房屋价格指数
     '70_cities_house_price_index': {
-        'url': 'http://money.finance.sina.com.cn/mac/api/jsonp.php/SINAREMOTECALLCALLBACK%s/MacPage_Service.get_pagedata?cate=industry&event=3&from=0&num=31&condition={"date":%s,"query":["%s"]}&_=%s',
+        'url': 'http://finance.sina.com.cn/mac/#industry-3-0-31-1',
+        'ajax_url': 'http://money.finance.sina.com.cn/mac/api/jsonp.php/SINAREMOTECALLCALLBACK%s/MacPage_Service.get_pagedata?cate=industry&event=3&from=0&num=31&condition={"date":%s,"query":["%s"]}&_=%s',
         'response_pattern': 'SINAREMOTECALLCALLBACK\d+\(\(\{config:\{all:(.*?),index:\d+,defaultItems:\[.*?\]\},count:"\d+",data:(.*?)}\)\)'
     }
 }

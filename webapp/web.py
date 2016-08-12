@@ -7,7 +7,7 @@ app = Flask(__name__)
 
 @app.route('/')
 def index():
-    sql = "select time_index, data_value from house.house_index where data_key = '百度指数-二手房' and area_id = 18 order by time_index asc"
+    sql = "select time_index, data_value from house.house_index where data_key = '百度指数-二手房' and area_id = 52 order by time_index asc"
     res = model.query(sql)
     date = []
     data = []
