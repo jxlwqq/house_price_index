@@ -1,3 +1,16 @@
+# 数据来源:
+* [tradingeconomics](http://www.tradingeconomics.com/)
+* [百度指数](https://index.baidu.com/)
+* [Google Trends](https://www.google.com/trends/)
+* [中华人民共和国国家统计局](http://www.stats.gov.cn/)
+* [中国宏观经济数据_新浪财经](http://finance.sina.com.cn/mac/)
+* [房天下](http://fangjia.fang.com/)
+
+# 相关库
+* scikit-learn 机器学习,用于建立预测模型
+* scrapy 爬取相关数据
+* selenium 某些网站的数据以图片形式,需浏览器打开,并识别图片
+* flask web框架
 
 # 房价走势相关指数
 * 百度关键词指数 "地王" "二手房"
@@ -13,9 +26,6 @@
 * 相关垂直网站的流量 房天下 安居客 链家
 * 沪深股指
 
-基础项目地址: [longzhiwen888/fetch_baidu_index](https://github.com/longzhiwen888/fetch_baidu_index)
-
-在上述项目上做了适当的调整,运行环境为 python2.7.*
 
 # 运行步骤:
 0. 安装 selenium的最新版本 ``` pip install -U selenium```，目前(20160809)为2.53.6。安装 [firefox 45](https://ftp.mozilla.org/pub/firefox/releases/45.0/) 版本，并禁止浏览器自动升级。
